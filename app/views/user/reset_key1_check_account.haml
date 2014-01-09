@@ -1,0 +1,15 @@
+%h2 活动通
+%div( class="modal fade in grey")
+  = render 'modify_password_header'
+  %div(class="index-login" style="text-align:center;")
+    =form_for(:user) do |f|
+      .input-prepend
+        = f.label :'帐   号' ,:class=>"add-on"
+        = f.text_field :name ,:type=>"text",:placeholder=>"请输入帐号名"
+      %br
+      -if @err_msg == 'true'
+        .btn-danger.active 该账户名不存在
+      %br
+      %div(style="text-align:center")
+        = f.submit "下 一 步", :class=> "btn btn-primary"
+      %br

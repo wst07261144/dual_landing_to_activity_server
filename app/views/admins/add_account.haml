@@ -1,0 +1,31 @@
+= render 'header'
+%div(style="background:#F5F5F5;padding:8px")
+  =link_to '首页',:action => 'manage_index'
+  %lable /添加用户
+%div(style="background:#F5F5F5;position: relative;" class="modal1")
+  %br
+  %br
+  %div(class="index-login" style="text-align:center;")
+    =form_for(:user) do |f|
+      .input-prepend
+        = f.label :'帐   号' ,:class=>"add-on",:style=>"width:100px"
+        = f.text_field :name ,:type=>"text"
+      .input-prepend
+        = f.label :'请设置密码' ,:class=>"add-on",:style=>"width:100px"
+        = f.text_field :password ,:type=>"password"
+      .input-prepend
+        = f.label :'请确认密码' ,:class=>"add-on",:style=>"width:100px"
+        = f.text_field :password_confirmation ,:type=>"password"
+      .input-prepend
+        = f.label :'忘记密码问题' ,:class=>"add-on",:style=>"width:100px"
+        = f.text_field :question ,:type=>"text"
+      .input-prepend
+        = f.label :'忘记密码答案' ,:class=>"add-on",:style=>"width:100px"
+        = f.text_field :answer ,:type=>"text"
+      %div(class=" btn-danger active" )
+        -if @user.errors.any?
+          = @user.errors.full_messages.first
+      %br
+      %div(style="text-align:center;")
+      %br
+        = f.submit "注  册", class: "btn btn-primary"

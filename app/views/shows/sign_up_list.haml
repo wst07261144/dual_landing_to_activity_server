@@ -1,0 +1,29 @@
+= render 'display_header'
+%div(style="background:#F5F5F5;padding:8px")
+  =link_to '首页' ,:action => 'show'
+  %lable /报名列表
+%br
+%div(class='title-bar')
+  %h4
+    报名列表
+    .right-padding1
+      =link_to '竞价列表',bids_url
+%table(class="table table-hover table-bordered" style="margin:auto; width:79%")
+  %thead
+    %tr
+      %th 编号
+      %th 姓名
+      %th 手机号
+  %tbody
+    - counter= @counter
+    -@sign_ups.each do |t|
+      %tr
+        %td(align="center" style="width:25%" valign="middle")
+          = counter
+          -counter=counter+1
+        %td(align="center" style="width:25%" valign="middle")
+          = t.name
+        %td(align="center" style="width:25%" valign="middle")
+          =t.phone
+.right-padding
+  = will_paginate @sign_ups,{:previous_label =>'上一页',:next_label => '下一页'}

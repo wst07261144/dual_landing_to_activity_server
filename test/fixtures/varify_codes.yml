@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  code: 1
+  user_id: 1
+  has_validate: false
+
+two:
+  code: 1
+  user_id: 1
+  has_validate: false

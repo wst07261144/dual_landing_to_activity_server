@@ -1,0 +1,68 @@
+= render 'display_header'
+%div(style="background:#F5F5F5;padding:8px")
+  =link_to '首页' ,:action =>'show'
+  %lable /
+  =link_to '竞价列表', bids_path
+  %lable /
+  =@bid
+%br
+%div(style="background:#c0c0c0;text-align:center;padding:8px")
+  -if @win.nil?
+    %h3 活动正在进行中...
+  -if !@win.nil?&&@win[:name]=='竞价无效'
+    %h3 本次竞价无效
+  -if !@win.nil?&&@win[:name]!='竞价无效'
+    %h4
+      ='获胜者:'+@win.name
+      ='出价:'+@win.price+'元'
+      ='手机号:'+@win.phone
+%div(class="container" )
+  %ul(class="nav nav-tabs" )
+    %li(class="active form-width" )
+      %a(href="#bid_lists"data-toggle="tab" ) 出价列表
+    %li(style="text-align:center;width:50%" )
+      %a(href="#bid_counts"data-toggle="tab" ) 价格统计
+  %div(class="tab-content container")
+    %div(class="tab-pane fade in active table-hover table-bordered" id='bid_lists')
+      %table(style='width:100%')
+        %thead
+          %tr(style="text-align:center;width:25%")
+            %th 编号
+            %th 姓名
+            %th 价格/元
+            %th 手机号
+        %tbody
+          -counter =@counter
+          -@bid_details.each do |t|
+            %tr(style="text-align:center;width:25%" valign="middle")
+              %td
+                = counter
+                -counter=counter+1
+              %td
+                =t.name
+              %td
+                =t.price
+              %td
+                =t.phone
+        .right-padding
+          = will_paginate @bid_details,{:previous_label =>'上一页',:next_label => '下一页'}
+    %div(class="tab-pane  table-hover table-bordered" id='bid_counts')
+      %table(style='width:100%')
+        %thead
+          %tr(style="text-align:center;width:50%")
+            %th 价格/元
+            %th 人数
+        %tbody
+          -@bid_counts.each do |t|
+            %tr
+              %td(style="text-align:center;width:50%" valign="middle")
+                =t.price
+              %td(style="text-align:center;width:50%" valign="middle")
+                =t.status
+    .right-padding
+      = will_paginate @bid_counts,{:previous_label =>'上一页',:next_label => '下一页'}
+
+
+
+
+
