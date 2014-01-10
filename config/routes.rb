@@ -2,11 +2,13 @@ ActivityServer::Application.routes.draw do
 
   root :to => 'sessions#login'
   get '/sessions/login/:code' => 'sessions#login'
+  get "/code/used/:code" => 'user#is_used'
 
   #sessions
   match '/manage_index'=>'admins#manage_index',via:'get'
   match '/shows/show'=> 'shows#show',via:'get'
-  post '/check_is_login'=>'sessions#check_is_login'
+  match '/shows/show/:code'=>'sessions#create',via:'post'
+  match '/shows/show'=>'sessions#create',via:'post'
 
   match '/sessions/logout'=>'sessions#logout',via:'get'
   match '/sessions/process_clients_login' ,to:'sessions#process_clients_login',via:'post'
@@ -17,7 +19,7 @@ ActivityServer::Application.routes.draw do
   match "/www/sessions/process_client_login",to: 'sessions#process_clients_login',via:'post'
   match '/www/sessions/process_synchronous',to:'sessions#process_synchronous',via:'post'
   match "/www/sessions/activity_show",to:'sessions#activity_show',via:'post'
-  match '/shows/show/:code'=>'sessions#create',via:'post'
+
   #shows
   match '/sessions/show/:activity_id/bid_list'=>'shows#bid_list',via:'get',:as=>'bids'
   match '/sessions/show/:activity_id/sign_up_list'=>'shows#sign_up_list',via:'get',:as=>'sign_up'
@@ -44,5 +46,5 @@ ActivityServer::Application.routes.draw do
   match '/reset_key2_check_question' =>'user#handle_reset_key2',via:'post'
   match "/reset_key3_to_reset_key"=>'user#handle_reset_key3' ,   via:'post'
 
-  get "/code/used/:code" => 'user#is_used'
+
 end

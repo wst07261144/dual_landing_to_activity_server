@@ -11,20 +11,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    p "----------code---------#{params[:code]}-------------------"
     @user = User.find_by(name: params[:session][:name])
-    VarifyCode.find_or_create_by :code=>params[:code],:user_id=>@user.id
+    VarifyCode.find_or_create_by :code=>params[:code],:user_id=>@user.id if params[:code].present?
     if @user && @user.authenticate(params[:session][:password])
       sign_in(@user)
     else
       @err = 'true'
       render '/sessions/login'
-    end
-  end
-
-  def check_is_login
-    respond_to do |form|
-      form.json {render json:'aaa'}
     end
   end
 
