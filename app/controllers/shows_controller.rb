@@ -1,5 +1,6 @@
 class ShowsController < ApplicationController
 
+  respond_to :json
   before_action :check_login, only: [:bid_list, :sign_up_list, :bid_detail]
 
   def show

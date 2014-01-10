@@ -85,11 +85,27 @@ class UserController < ApplicationController
 
   def is_used
      if VarifyCode.is_used params[:code]
-       render :text => 'ok'
+       #user_name = User.find_by(code:params[:code]).name
+       #render :text => user_name
+       render :text=>'ok'
      else
-       render :text => 'no'
+       render :text => 'error'
      end
   end
+
+  def send_data
+    #id= session[:current_user_id]
+    #user = User.find(id).name
+    #sign_ups = SignUp.all.where(:user=>user).group(:activity_id)
+    #bids = Bid.all.where(:user=>user)
+    p '--------------------------'
+    p session[:current_user_id]
+    respond_to do |format|
+      #format.json {render :json=>[{name:123,phone:4567},{name:'wer',phone:123456}].to_json}
+      format.json {render :json=>[{'name'=>123,'phone'=>4567},{'name'=>'wer','phone'=>123456}].to_json}
+    end
+  end
+
 
   private
   def user_params

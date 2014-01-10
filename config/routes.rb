@@ -3,6 +3,9 @@ ActivityServer::Application.routes.draw do
   root :to => 'sessions#login'
   get '/sessions/login/:code' => 'sessions#login'
   get "/code/used/:code" => 'user#is_used'
+  #get '/request/data/:code'=>'user#send_data'
+  get '/request/data'=>'user#send_data'
+
 
   #sessions
   match '/manage_index'=>'admins#manage_index',via:'get'
