@@ -3,8 +3,9 @@ ActivityServer::Application.routes.draw do
   root :to => 'sessions#login'
   get '/sessions/login/:code' => 'sessions#login'
   get "/code/used/:code" => 'user#is_used'
-  #get '/request/data/:code'=>'user#send_data'
-  get '/request/data'=>'user#send_data'
+  get "/code/logout/:code" => 'user#is_logout'
+  get '/request/data/:user_name'=>'user#send_data'
+
 
 
   #sessions

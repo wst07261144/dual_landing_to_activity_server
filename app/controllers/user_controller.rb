@@ -84,25 +84,31 @@ class UserController < ApplicationController
   end
 
   def is_used
+    p params[:code]
      if VarifyCode.is_used params[:code]
-       #user_name = User.find_by(code:params[:code]).name
-       #render :text => user_name
-       render :text=>'ok'
+       user_id = VarifyCode.find_by(code:params[:code])[:user_id]
+       render :text => User.find(user_id).name
      else
-       render :text => 'error'
+       render :text => 'false'
+     end
+  end
+
+  def is_logout
+     if VarifyCode.is_logout params[:code]
+       render :text=>'logout'
+     else
+       render :text => 'landing'
      end
   end
 
   def send_data
-    #id= session[:current_user_id]
-    #user = User.find(id).name
-    #sign_ups = SignUp.all.where(:user=>user).group(:activity_id)
-    #bids = Bid.all.where(:user=>user)
-    p '--------------------------'
-    p session[:current_user_id]
+    user = params[:user_name]
+    user_id = User.find_by(name:user)[:id]
+    code = VarifyCode.where(:user_id=>user_id).last[:code]
     respond_to do |format|
-      #format.json {render :json=>[{name:123,phone:4567},{name:'wer',phone:123456}].to_json}
-      format.json {render :json=>[{'name'=>123,'phone'=>4567},{'name'=>'wer','phone'=>123456}].to_json}
+      format.json {render :json=>{:user=>user,:sign_ups=>SignUp.all.where(:user=>user),
+                                  :bid_lists=>BidList.all.where(:user=>user),
+                                  :activities=>Activity.all.where(:user=>user),:code=>code}}
     end
   end
 

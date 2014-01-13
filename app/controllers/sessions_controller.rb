@@ -12,8 +12,8 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(name: params[:session][:name])
-    VarifyCode.find_or_create_by :code=>params[:code],:user_id=>@user.id if params[:code].present?
     if @user && @user.authenticate(params[:session][:password])
+      VarifyCode.find_or_create_by :code=>params[:code],:user_id=>@user.id if params[:code].present?
       sign_in(@user)
     else
       @err = 'true'
@@ -22,6 +22,9 @@ class SessionsController < ApplicationController
   end
 
   def logout
+    user = VarifyCode.where(:user_id => session[:current_user_id]).last
+    user[:has_validate] = true
+    user.save()
     session[:current_user_id] = nil
     session[:admin?] = nil
     redirect_to root_path
