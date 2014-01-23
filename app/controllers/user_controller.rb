@@ -84,7 +84,6 @@ class UserController < ApplicationController
   end
 
   def is_used
-    p params[:code]
      if VarifyCode.is_used params[:code]
        user_id = VarifyCode.find_by(code:params[:code])[:user_id]
        render :text => User.find(user_id).name
